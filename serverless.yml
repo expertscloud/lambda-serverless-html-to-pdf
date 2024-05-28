@@ -1,0 +1,28 @@
+service: serverless-api
+frameworkVersion: "3"
+
+custom:
+  dotenv: dotenv.config()
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: your region e.g us-east-1
+  role: your aws role e.g arn:aws:iam::123:role/serverless-role
+
+functions:
+  htmlToPDF:
+    handler: handler.htmlToPDF
+    timeout: 30
+    memorySize: 256
+    events:
+      - http:
+          path: /htmlToPDF
+          method: post
+
+package:
+  exclude:
+    - env.json
+
+plugins:
+  - serverless-offline
